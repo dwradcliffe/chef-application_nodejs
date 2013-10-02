@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd <%= @options[:app].path %>/current
+
+exec 2>&1
+exec <%= node[:runit][:chpst_bin] %> \
+  <% if @options[:env_dir] %>-e <%= node[:runit][:sv_dir] %>/<%= @options[:app].application.name %>/env<% end %> \
+  -u <%= @options[:app].owner %>:<%= @options[:app].group %> \
+  <%= @options[:app].command %> <%= @options[:app].script %>
